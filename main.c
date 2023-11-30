@@ -2068,6 +2068,24 @@ srandom(time(NULL) ^ getpid());
             }
         }
 
+        /* Fix wrong broadcast address */
+        if (iface->dstaddr.s_addr == inet_addr("0.0.0.0")) {
+            struct ifreq req;
+            memcpy(&req, &basereq, sizeof(req));
+
+            if (ioctl(fd,SIOCGIFNETMASK, &req) < 0) {
+                perror("ioctl(SIOCGIFNETMASK)");
+                exit(1);
+            }
+            struct in_addr subnet_mask;
+            memcpy(
+                &subnet_mask, 
+                &((struct sockaddr_in*)&req.ifr_netmask)->sin_addr, 
+                sizeof(struct in_addr)
+            );  
+            iface->dstaddr.s_addr = iface->ifaddr.s_addr | (~subnet_mask.s_addr);
+        }
+        
         char ifaddr[255];
         inet_ntoa2(iface->ifaddr, ifaddr, sizeof(ifaddr));
         char dstaddr[255];

@@ -1,5 +1,69 @@
+
+
 UDP Broadcast Relay for Linux / FreeBSD / pfSense / OPNsense
 ============================================================
+
+Note for UXG Lite
+-------
+
+This is an enhanced version of the UDP Broadcast Relay designed specifically for Unifi UXG Lite.
+
+### Installation Options:
+#### Option 1: Download Binary
+Visit the Release Page to download the precompiled binary.
+#### Option 2: Build from Source
+1. Requirements: Linux computer with `arm-linux-gnueabihf-gcc` installed.
+2. Build: Execute `make` in the source code directory.
+
+### Uploading and Running on UXG-L:
+
+1. Upload binary to UXG-L:
+```
+scp udpbroadcastrelay root@192.168.1.1:/root/udpbroadcastrelay
+```
+2. SSH into your UXG-L:
+```
+ssh root@192.168.1.1
+```
+3. Test the program:
+```
+./udpbroadcastrelay --id 1 --port 20002 --dev br0 --dev eth0.2 -d
+```
+* Replace `br0` and `eth0.2` with the NIC names obtained from ifconfig. They should correspond to the NIC with VLAN address you are caring.
+* `-d` is the debug flag
+
+4. If the test is successful, create a service for the app:
+```
+nano /etc/systemd/system/udpbroadcastrelay.service
+```
+Add the following content, be careful, this time without `-d` flag.:
+```
+[Unit]
+Description=UDP Broadcast Relay Service
+After=network.target
+
+[Service]
+ExecStart=/root/udpbroadcastrelay --id 1 --port 20002 --dev br0 --dev eth0.2
+Restart=always
+RestartSec=3
+User=root
+
+[Install]
+WantedBy=default.target
+```
+
+5. Reload systemd and start the service: 
+```
+systemctl daemon-reload
+systemctl enable udpbroadcastrelay
+systemctl start udpbroadcastrelay
+```
+
+You're all set!
+
+Original README
+-------
+
 ( For Opensense a plugin is already available )
 
 This program listens for packets on a specified UDP broadcast port. When

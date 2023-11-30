@@ -1,4 +1,6 @@
 VERSION=1.1
+CC=arm-linux-gnueabihf-gcc
+CFLAGS=-static
 
 udpbroadcastrelay: main.c
 	$(CC) $(CFLAGS) -g main.c -o udpbroadcastrelay
