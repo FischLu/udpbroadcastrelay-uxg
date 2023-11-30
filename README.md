@@ -10,7 +10,7 @@ This is an enhanced version of the UDP Broadcast Relay designed specifically for
 
 ### Installation Options:
 #### Option 1: Download Binary
-Visit the Release Page to download the precompiled binary.
+Visit the [Release Page](https://github.com/FischLu/udpbroadcastrelay-uxg/releases) to download the precompiled binary.
 #### Option 2: Build from Source
 1. Requirements: Linux computer with `arm-linux-gnueabihf-gcc` installed.
 2. Build: Execute `make` in the source code directory.
