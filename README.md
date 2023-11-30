@@ -26,10 +26,10 @@ scp udpbroadcastrelay root@192.168.1.1:/root/udpbroadcastrelay
 ssh root@192.168.1.1
 ```
 3. Test the program:
-* you need to figure out the port by yourself, you can use tcpdump, wireshark, etc. here 20002 is the broadcast port used by Tapo 
 ```
 ./udpbroadcastrelay --id 1 --port 20002 --dev br0 --dev eth0.2 -d
 ```
+* You need to figure out the port by yourself, you can use tcpdump, wireshark, etc. here 20002 is the broadcast port used by Tapo 
 * Replace `br0` and `eth0.2` with the NIC names obtained from ifconfig. They should correspond to the NIC with VLAN address you are caring.
 * `-d` is the debug flag
 
