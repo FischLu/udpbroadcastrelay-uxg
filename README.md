@@ -60,6 +60,9 @@ systemctl enable udpbroadcastrelay
 systemctl start udpbroadcastrelay
 ```
 
+6. Check your firewall
+You need to allow the IoT device to respone the broadcast, for me, my iPhone has a fixed IP, 192.168.1.10, therefore, I allow the UDP data from IoT network to 192.168.1.10, you can also specify which IP from IoT network can connect to 192.168.1.10.
+
 You're all set!
 
 Original README
